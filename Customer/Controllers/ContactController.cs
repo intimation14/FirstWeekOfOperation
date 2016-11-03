@@ -16,18 +16,38 @@ namespace Customer.Controllers
         客戶資料Repository repo1 = RepositoryHelper.Get客戶資料Repository();
 
         // GET: Contact
-        public ActionResult Index(string search)
+        public ActionResult Index(string search,string 職稱 )
         {
             //var data = dbCustomer.客戶聯絡人.ToList();
             List<客戶聯絡人> data = null;
 
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search) || !string.IsNullOrEmpty(職稱))
             {
-                data = repo.GetSearchData(search).ToList();
+                if (!string.IsNullOrEmpty(search) && !string.IsNullOrEmpty(職稱))
+                {
+
+                    data = repo.GetSearchData("1", search, 職稱).ToList();
+                }
+                else if (!string.IsNullOrEmpty(search))
+                {
+
+                    data = repo.GetSearchData("2", search, 職稱).ToList();
+
+                }
+                else if (!string.IsNullOrEmpty(職稱))
+                {
+
+                    data = repo.GetSearchData("3", search, 職稱).ToList();
+                }
+
                 //data = data.Where(q => q.姓名.Contains(search)).ToList();
             }
             //data = data.Where(c => c.IsDeleted != true).ToList();
             data = repo.All().ToList();
+
+            var options = (from p in repo.All() select p.職稱).Distinct().OrderBy(p => p).ToList();
+            ViewBag.職稱 = new SelectList(options);
+
             return View(data);
         }
 

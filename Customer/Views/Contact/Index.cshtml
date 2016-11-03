@@ -10,8 +10,8 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <form actno="">
-    客戶名稱搜尋:
-    <input type="search" name="search" />
+    客戶名稱搜尋:<input type="search" name="search" />
+    職稱: @Html.DropDownList("職稱", "請選擇職稱")
     <input type="submit" name="搜尋" />
 </form>
 <br />
