@@ -16,19 +16,36 @@ namespace Customer.Controllers
 
 
         // GET: CusData
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, string 客戶分類)
         {
             //var client = dbCustomer.客戶資料.ToList();
            
             List<客戶資料> client = null;
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search) || !string.IsNullOrEmpty(客戶分類))
             {
-                //client = client.Where(p => p.客戶名稱.Contains(search)).ToList();
-                 client  = repo.GetSearchData(search).ToList();
+                if (!string.IsNullOrEmpty(search) && !string.IsNullOrEmpty(客戶分類))
+                {
+                    client = repo.GetSearchData("3",search, 客戶分類).ToList();
+                }
+                else if (!string.IsNullOrEmpty(search))
+                {
+                    //client = client.Where(p => p.客戶名稱.Contains(search)).ToList();
+                    client = repo.GetSearchData("1",search, 客戶分類).ToList();
+
+                }
+                if (!string.IsNullOrEmpty(客戶分類))
+                {
+                    client = repo.GetSearchData("2", search, 客戶分類).ToList();
+                }
+            }
+            else
+            {
+                //client = client.Where(q => q.IsDeleted != true).ToList();
+                client = repo.getNoExistIsDeleted().ToList();
 
             }
-            //client = client.Where(q => q.IsDeleted != true).ToList();
-            client = repo.All().ToList();
+            var options = (from p in repo.All() select p.客戶分類).Distinct().OrderBy(p => p).ToList();
+            ViewBag.客戶分類 = new SelectList(options);
 
             return View(client);
         }

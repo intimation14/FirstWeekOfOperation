@@ -12,8 +12,11 @@
 
 <form actno ="">
     客戶名稱搜尋:
-    <input type="search" name="search" />
+    @*<input type="search" name="search" />*@
+    @Html.TextBox("search")
+    客戶分類: @Html.DropDownList("客戶分類", "請選擇分類")
     <input type="submit"  name="搜尋"   />
+
 </form>
 <br />
 <table class="table">
@@ -35,6 +38,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.客戶分類)
         </th>
         <th></th>
     </tr>
@@ -59,7 +65,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-  
+        <td>
+            @Html.DisplayFor(modelItem => item.客戶分類)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
