@@ -11,39 +11,44 @@ namespace Customer.Controllers
 {
     public class ContactController : Controller
     {
-        private 客戶資料Entities dbCustomer = new Models.客戶資料Entities();
+        //private 客戶資料Entities dbCustomer = new Models.客戶資料Entities();
+        客戶聯絡人Repository repo = RepositoryHelper.Get客戶聯絡人Repository();
+        客戶資料Repository repo1 = RepositoryHelper.Get客戶資料Repository();
 
         // GET: Contact
         public ActionResult Index(string search)
         {
-            var data = dbCustomer.客戶聯絡人.ToList();
+            //var data = dbCustomer.客戶聯絡人.ToList();
+            List<客戶聯絡人> data = null;
 
             if (!string.IsNullOrEmpty(search))
             {
-                data = data.Where(q => q.姓名.Contains(search)).ToList();
+                data = repo.GetSearchData(search).ToList();
+                //data = data.Where(q => q.姓名.Contains(search)).ToList();
             }
-            data = data.Where(c => c.IsDeleted != true).ToList();
-
+            //data = data.Where(c => c.IsDeleted != true).ToList();
+            data = repo.All().ToList();
             return View(data);
         }
 
         public ActionResult Create()
         {
-            ViewBag.客戶Id = new SelectList(dbCustomer.客戶資料, "id", "客戶名稱");
+            ViewBag.客戶Id = new SelectList(repo1.All(), "id", "客戶名稱");
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(客戶聯絡人 data)
         {
-            ViewBag.客戶id = new SelectList(dbCustomer.客戶資料, "id", "客戶名稱");
+            ViewBag.客戶id = new SelectList(repo1.All(), "id", "客戶名稱");
             if (ModelState.IsValid)
             {
-                dbCustomer.Entry(data).State = EntityState.Added;
-
+                //dbCustomer.Entry(data).State = EntityState.Added;
+                repo.UnitOfWork.Context.Entry(data).State = EntityState.Added;
                 try
                 {
-                    dbCustomer.SaveChanges();
+                    //dbCustomer.SaveChanges();
+                    repo.UnitOfWork.Commit();
                 }
                 catch (DbEntityValidationException ex) //Entity Framework 發生驗證例外時的處裡方法
                 {
@@ -70,8 +75,9 @@ namespace Customer.Controllers
 
         public ActionResult Edit(int id)
         {
-            ViewBag.客戶id = new SelectList(dbCustomer.客戶資料, "id", "客戶名稱");
-            var EditData = dbCustomer.客戶聯絡人.Find(id);
+            ViewBag.客戶id = new SelectList(repo1.All(), "id", "客戶名稱");
+            var EditData = repo.Find(id);
+            //var EditData = dbCustomer.客戶聯絡人.Find(id);
             return View(EditData);
         }
 
@@ -83,9 +89,10 @@ namespace Customer.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    dbCustomer.Entry(data).State = EntityState.Modified;
-                    dbCustomer.SaveChanges();
-
+                    // dbCustomer.Entry(data).State = EntityState.Modified;
+                    // dbCustomer.SaveChanges();
+                    repo.UnitOfWork.Context.Entry(data).State = EntityState.Modified;
+                    repo.UnitOfWork.Commit();
                 }
 
                 //return View();
@@ -103,7 +110,7 @@ namespace Customer.Controllers
                 }
 
             }
-            ViewBag.客戶id = new SelectList(dbCustomer.客戶資料, "id", "客戶名稱");
+            ViewBag.客戶id = new SelectList(repo1.All(), "id", "客戶名稱");
             return RedirectToAction("Index");
         }
 
@@ -111,18 +118,22 @@ namespace Customer.Controllers
         [HttpGet]
         public ActionResult Delete(int id )
         {
-            var delData = dbCustomer.客戶聯絡人.Find(id);
+            //var delData = dbCustomer.客戶聯絡人.Find(id);
+            var delData = repo.Find(id);
+
             // dbCustomer.客戶聯絡人.Remove(delData);
             delData.IsDeleted = true;
-            dbCustomer.SaveChanges();
 
+            //dbCustomer.SaveChanges();
+            repo.UnitOfWork.Commit();
             return RedirectToAction("Index");
            
         }
 
         public ActionResult Details(int id)
         {
-            var delData = dbCustomer.客戶聯絡人.Find(id);
+            //var delData = dbCustomer.客戶聯絡人.Find(id);
+            var delData = repo.Find(id);
             return View(delData);
         }
 
