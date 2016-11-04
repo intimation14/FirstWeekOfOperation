@@ -137,8 +137,11 @@ namespace Customer.Controllers
 
         public ActionResult Details(int id)
         {
-           // var delData = dbCustomer.客戶資料.Find(id);
-           var delData = repo.Find(id);
+            var options = (from p in repo.All() select p.客戶分類).Distinct().OrderBy(p => p).ToList();
+            ViewBag.客戶分類 = new SelectList(options);
+
+            // var delData = dbCustomer.客戶資料.Find(id);
+            var delData = repo.Find(id);
             return View(delData);
         }
 

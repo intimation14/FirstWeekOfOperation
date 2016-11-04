@@ -54,6 +54,7 @@ namespace Customer.Controllers
         public ActionResult Create()
         {
             ViewBag.客戶Id = new SelectList(repo1.All(), "id", "客戶名稱");
+            //ViewBag.客戶Id = new SelectList(dbCustomer.客戶資料, "id", "客戶名稱");
             return View();
         }
 
@@ -61,6 +62,7 @@ namespace Customer.Controllers
         public ActionResult Create(客戶聯絡人 data)
         {
             ViewBag.客戶id = new SelectList(repo1.All(), "id", "客戶名稱");
+           // ViewBag.客戶Id = new SelectList(dbCustomer.客戶資料, "id", "客戶名稱");
             if (ModelState.IsValid)
             {
                 //dbCustomer.Entry(data).State = EntityState.Added;
@@ -72,15 +74,16 @@ namespace Customer.Controllers
                 }
                 catch (DbEntityValidationException ex) //Entity Framework 發生驗證例外時的處裡方法
                 {
-                    foreach (var entityErrors in ex.EntityValidationErrors)
-                    {
-                        foreach (var item in entityErrors.ValidationErrors)
-                        {
-                            //
-                            throw new DbEntityValidationException(item.PropertyName + "發生錯誤" + item.PropertyName);
-                        }
+                    throw ex;
+                    //foreach (var entityErrors in ex.InnerException)
+                    //{
+                    //    foreach (var item in entityErrors.ValidationErrors)
+                    //    {
+                    //        //
+                    //        throw new DbEntityValidationException(item.PropertyName + "發生錯誤" + item.PropertyName);
+                    //    }
 
-                    }
+                    //}
 
                 }
                

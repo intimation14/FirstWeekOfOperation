@@ -7,28 +7,30 @@ namespace Customer.Models
     using System.Text.RegularExpressions;
 
     [MetadataType(typeof(客戶聯絡人MetaData))]
-    public partial class 客戶聯絡人 : IValidatableObject
-    {
-      
+    //public partial class 客戶聯絡人 : IValidatableObject
+    //{
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-          
-            var db = new Models.客戶資料Entities();
-            var ClientData = db.客戶聯絡人.SqlQuery("select * from 客戶聯絡人 where 客戶id= @客戶id", new SqlParameter("@客戶id", this.客戶Id));
-            foreach (var item in ClientData)
-            {
-                if (this.客戶Id == item.客戶Id && this.Email == item.Email)
-                {
-                    yield return new ValidationResult("Email與其他聯絡人重複", new string[] { "Email" });
-                    yield break;
-                }
-              
-            }
-        }
 
-      
-    }
+    //    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    //    {
+
+    //        //var db = new Models.客戶資料Entities();
+    //        //var ClientData = db.客戶聯絡人.SqlQuery("select * from 客戶聯絡人 where 客戶id= @客戶id", new SqlParameter("@客戶id", this.客戶Id));
+    //        //foreach (var item in ClientData)
+    //        //{
+    //        //    if (this.客戶Id == item.客戶Id && this.Email == item.Email)
+    //        //    {
+    //        //        yield return new ValidationResult("Email與其他聯絡人重複", new string[] { "Email" });
+    //        //        yield break;
+    //        //    }
+
+    //        IEnumerable<ValidationResult> yield = null;
+    //        //}
+    //        return yield;
+    //    }
+
+
+    //    }
         
 
     public partial class 客戶聯絡人MetaData

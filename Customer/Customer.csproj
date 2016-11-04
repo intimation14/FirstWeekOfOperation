@@ -72,10 +72,6 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.1.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -209,6 +205,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BankInfoController.cs" />
+    <Compile Include="Controllers\BCController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CusDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -256,6 +253,7 @@
     <Compile Include="Models\RepositoryHelper.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\BatchUpdateViewModel.cs" />
     <Compile Include="Models\vw_CustomerCount.cs">
       <DependentUpon>Customer.tt</DependentUpon>
     </Compile>
@@ -396,6 +394,8 @@
     <Content Include="Views\Contact\Create.cshtml" />
     <Content Include="Views\BankInfo\Delete.cshtml" />
     <Content Include="Views\CusData\CustomerCount.cshtml" />
+    <Content Include="Views\BC\ContactList.cshtml" />
+    <Content Include="Views\BC\ContactResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

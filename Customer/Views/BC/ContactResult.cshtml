@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "ContactResult";
+}
+
+@using Customer.Models.ViewModels
+@{
+    var c = TempData["MyFormData"] as BatchUpdateViewModel;
+    if (c != null)
+    {
+        <h3>@c.客戶Id 新增資料成功！</h3>
+    }
+}

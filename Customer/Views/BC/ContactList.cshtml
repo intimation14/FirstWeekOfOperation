@@ -1,0 +1,68 @@
+﻿
+@model IEnumerable<Customer.Models.客戶聯絡人>
+
+@{
+    ViewBag.Title = "ContactList";
+}
+
+
+@{
+    var items = Model.ToArray();
+}
+
+@using (Html.BeginForm("BatchUpdate", "BC"))
+{
+    <br />
+    <table  class="table table-striped table-bordered" cellspacing="0">
+        <tr>    
+            <th>
+                @Html.DisplayNameFor(model => model.職稱)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.姓名)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.手機)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.電話)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.客戶資料.客戶名稱)
+            </th>
+        </tr>
+
+       @for (int i = 0; i < items.Length; i++)
+       {
+           @Html.HiddenFor(model => items[i].Id)
+
+           <tr>
+               <td>
+                   @Html.EditorFor(modelItem => items[i].職稱)
+               </td>
+               <th>
+                   @Html.DisplayFor(model => items[i].姓名)
+               </th>
+               <th>
+                   @Html.DisplayFor(model => items[i].Email)
+               </th>
+               <th>
+                   @Html.EditorFor(model => items[i].手機)
+               </th>
+               <th>
+                   @Html.EditorFor(model => items[i].電話)
+               </th>
+               <td>
+                   @Html.DisplayFor(modelItem => items[i].客戶資料.客戶名稱)
+               </td>
+           </tr>
+
+       }
+
+    </table>
+
+    <input type="submit" name="" value="批次更新" />
+}

@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Customer/Controllers/ContactController - 複製.cs
+/Customer/Views/Contact - 複製

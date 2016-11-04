@@ -37,6 +37,8 @@ namespace Customer.Models
             return this.getNoExistIsDeleted().FirstOrDefault(p => p.Id == id);
         }
 
+      
+
     }
 
 	public  interface I客戶聯絡人Repository : IRepository<客戶聯絡人>
